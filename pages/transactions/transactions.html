@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Transações - PlanejaFácil</title>
+    <link rel="shortcut icon" href="../../assets/imgs/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/styles/global.css">
+    <link rel="stylesheet" href="../../assets/styles/transactions.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="header-area">
+                <a class="logo-site" href="">
+                    <img src="../../assets/imgs/graph.png" alt="logo">
+                    <p> PlanejaFácil.com</p>
+                </a>
+                <a href="../profile/profile.html" class="logo-area">
+                    <img id="profileImage" class="profile-avatar-home" src="/" alt="Foto de perfil">
+                    <div class="name" id="welcome"> </div>
+                </a>
+            </div>
+            <div class="menu-area">
+                <ul class="menu">
+                    <li><a href="../home/home.html">Dashboard</a></li>
+                    <li><a href="../transactions/transactions.html" class="active">Transações</a></li>
+                    <li><a href="../profile/profile.html">Profile</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="page-title-area">
+            <h1 class="page-title">Transações</h1>
+        </div>
+
+        <div class="item-area">
+            <div class="items">
+                <div class="item-title">
+                    <p class="title-area"> Lançamentos </p>
+                    <div class="accountant">
+                        <p class="number"> 0 </p>
+                    </div>
+                </div>
+                <ol id="transaction"></ol>
+                <div class="item-null">
+                    <img src="../../assets//imgs/report-card.png" alt="">
+                    <p> Você ainda não registrou despesas ou receitas neste mês </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalOverlay" class="modal-overlay">
+            <div class="modal-content">
+                <button type="button" id="closeModalBtn" class="close-btn">&times;</button>
+                <div class="modal-header">
+                    <h3>Adicionar Transação</h3>
+                    <span class="modal-subtitle">Insira as informações abaixo</span>
+                </div>
+
+                <form id="transactionForm">
+                    <div class="form-field">
+                        <label class="field-label" for="transaction-description">Título</label>
+                        <input id="transaction-description" type="text" placeholder="Título" class="input-330"
+                            onchange="onChangeDescription()">
+                        <div class="error" id="title-required-error" required>
+                            Ops! O Título é obrigatorio
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="field-label" for="value">Valor</label>
+                        <div class="input-prefix">
+                            <select id="currency" class="currency">
+                                <option value="BRL"> BRL </option>
+                                <option value="USD"> USD </option>
+                                <option value="EUR"> EUR </option>
+                            </select>
+                            <input type="number" placeholder="0,00" onchange="onChangeValue()" id="value">
+                        </div>
+                        <div class="error" id="value-required-error" required>
+                            Ops! O Valor é obrigatorio
+                        </div>
+                        <div class="error" id="value-less-equal-to-zero-error">
+                            Ops! O Valor não pode ser menor ou igual a 0
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="field-label" for="transactionDesc">Categoria da transaçãoo</label>
+                        <select class="transactionStyle" onchange="onChangeTransactionType()" id="transactionType">
+                            <option value=""> Selecione </option>
+                            <option> Acomodação </option>
+                            <option> Alimentação </option>
+                            <option> Outros </option>
+                            <option> Salário </option>
+                            <option> Supermercado </option>
+                            <option> Transporte </option>
+                            <option> Emprestimo </option>
+                            <option> Estudos </option>
+                        </select>
+                        <div class="error" id="transactionType-required-error" required>
+                            Ops! O Tipo de transação é obrigatorio
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="field-label" for="transactionType">Tipo da transação</label>
+                        <select class="transactionStyle" onchange="selectTransactionType(this.value)">
+                            <option value="">Selecione o tipo</option>
+                            <option value="income">Entrada</option>
+                            <option value="expense">Saída</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="field-label" for="date">Data</label>
+                        <input type="date" class="date-input" onchange="onChangeDate()" id="date">
+                        <div class="error" id="date-required-error" required>
+                            Ops! A Data de obrigatoria / Inválida
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn-save" id="cancel-button">Cancelar</button>
+                        <button id="save-button" type="button" class="btn-save" disabled onclick="saveTransaction()">
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="toast-container" id="toastContainer"></div>
+
+    </main>
+
+    <script src="../../assets/js/mobile-only.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="../../assets/js/firebase-init.js"></script>
+    <script src="../../assets/js/auth-guard.js"></script>
+    <script src="../../assets//js/transactions.services.js"></script>
+    <script src="../../assets/js/home.js"></script>
+    <script src="../../assets/js/transactions.js"></script>
+    <script src="../../assets//js/loanding.js"></script>
+</body>
+
+</html>

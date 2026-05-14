@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Profile - PlanejaFácil</title>
+    <link rel="shortcut icon" href="../../assets/imgs/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/styles/home.css">
+    <link rel="stylesheet" href="../../assets/styles/global.css">
+    <link rel="stylesheet" href="../../assets/styles/profile.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="header-area">
+                <a class="logo-site" href="">
+                    <img src="../../assets/imgs/graph.png" alt="logo">
+                    <p> PlanejaFácil.com</p>
+                </a>
+                <a href="profile.html" class="logo-area">
+                    <img class="profile-avatar-home profileImage" src="/" alt="Foto de perfil">
+                    <div class="name" id="welcome"></div>
+                </a>
+            </div>
+            <div class="menu-area">
+                <ul class="menu">
+                    <li><a href="../home/home.html">Dashboard</a></li>
+                    <li><a href="../transactions/transactions.html">Transações</a></li>
+                    <li><a href="profile.html" class="active">Profile</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="page-title-area">
+            <h1 class="page-title">Profile</h1>
+        </div>
+
+        <div class="centralize">
+            <div class="profile-avatar-wrap">
+                <div class="avatarPlaceholder profile-avatar-placeholder">👤</div>
+                <img class="profileImage profile-avatar" src="/" alt="Foto de perfil" style="display:none">
+                <p class="profileName profile-display-name">Carregando...</p>
+                <p class="profile-email" id="profileEmail"></p>
+            </div>
+        </div>
+
+        <div class="centralize">
+            <div class="profile-section-name">
+                <p class="profile-section-title">Editar nome</p>
+                <div class="profile-field">
+                    <label for="inputName">Nome de exibição</label>
+                    <input id="inputName" class="profile-input" type="text" placeholder="Seu nome"
+                        oninput="onChangeName()">
+                </div>
+                <button class="profile-btn btn-primary" id="btnSaveName" onclick="saveName()" disabled>
+                    Salvar
+                </button>
+            </div>
+        </div>
+
+        <div class="centralize">
+            <div class="profile-section">
+                <p class="profile-section-title">Informações da conta</p>
+                <div class="profile-field">
+                    <label>Método de login</label>
+                    <div class="profile-field-value" id="profileProvider">—</div>
+                </div>
+                <div class="profile-field">
+                    <label>Conta criada em</label>
+                    <div class="profile-field-value" id="profileCreatedAt">—</div>
+                </div>
+                <div class="profile-field">
+                    <label>Último acesso</label>
+                    <div class="profile-field-value" id="profileLastLogin">—</div>
+                </div>
+                <button class="btn-logout" type="button" onclick="logout()" title="Sair">
+                    <span>Sair</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="centralize">
+            <div class="profile-section-acconunt">
+                <p class="profile-section-title">Opções da conta</p>
+                <button class="btn-logout" onclick="openDeleteConfirm()">
+                    Excluir minha conta
+                </button>
+            </div>
+        </div>
+
+        <div class="confirm-overlay" id="deleteConfirmOverlay">
+            <div class="confirm-box">
+                <h3>Excluir conta?</h3>
+                <p>Essa ação é irreversível. Todos os seus dados serão apagados permanentemente.</p>
+                <div class="confirm-actions">
+                    <button class="btn-cancel-confirm" onclick="closeDeleteConfirm()">Cancelar</button>
+                    <button class="btn-delete-confirm" onclick="deleteAccount()">Excluir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-container" id="toastContainer"></div>
+
+    </main>
+
+    <script src="../../assets/js/mobile-only.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="../../assets/js/firebase-init.js"></script>
+    <script src="../../assets/js/auth-guard.js"></script>
+    <script src="../../assets/js/profile.js"></script>
+    <script src="../../assets/js/loanding.js"></script>
+
+</body>
+
+</html>
