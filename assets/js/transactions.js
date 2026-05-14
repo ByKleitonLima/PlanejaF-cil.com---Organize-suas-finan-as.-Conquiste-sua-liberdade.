@@ -423,11 +423,13 @@ function clearForm() {
     const val = form.value();
     const dt = form.date();
     const cur = form.currency();
+    const type = form.transactionType();
 
     if (desc) desc.value = "";
     if (val) val.value = "";
     if (dt) dt.value = "";
     if (cur) cur.value = "BRL";
+    if (type) type.value = "";
 
     selectedType = null;
     currentEditId = null;
